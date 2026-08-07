@@ -2,55 +2,54 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Wizard Requisiti Data Product</title>
+<title>Wizard Generazione Requisiti in Analisi Funzionale Confluense per Data Product</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root{
-  /* ---- Material 3 — palette BASELINE ufficiale (m3.material.io/styles/color/static/baseline) ---- */
-  --md-primary:#6750A4;
+  /* ---- Seed colore Atlassian Design System (Confluence/Jira Cloud) ---- */
+  --md-primary:#0C66E4;            /* Blue — brand.bold, il blu dei bottoni primari di Confluence */
   --md-on-primary:#FFFFFF;
-  --md-primary-container:#EADDFF;
-  --md-on-primary-container:#21005D;
-  --md-primary-dark:#4F378A;      /* tono 30 della palette primary, per testo/hover enfatizzati */
-  --md-primary-light:#EADDFF;      /* alias di primary-container, per sfondi soft */
+  --md-primary-container:#E9F2FF;   /* Blue subtlest */
+  --md-on-primary-container:#0055CC;
+  --md-primary-dark:#0055CC;        /* Blue bold hover */
+  --md-primary-light:#E9F2FF;
 
-  --md-secondary:#625B71;
+  --md-secondary:#44546F;           /* Neutral testo secondario (color.text.subtle) */
   --md-on-secondary:#FFFFFF;
-  --md-secondary-container:#E8DEF8;
-  --md-on-secondary-container:#1D192B;
+  --md-secondary-container:#F1F2F4; /* Neutral subtlest */
+  --md-on-secondary-container:#172B4D;
 
-  --md-tertiary:#7D5260;
+  --md-tertiary:#6E5DC6;            /* Purple "Discovery" — il colore che Atlassian usa per le feature AI/assistite */
   --md-on-tertiary:#FFFFFF;
-  --md-tertiary-container:#FFD8E4;
-  --md-on-tertiary-container:#31111D;
+  --md-tertiary-container:#F3F0FF;
+  --md-on-tertiary-container:#352C63;
 
-  /* CTA principale (bottoni "Convalida" / "Genera"): usiamo il ruolo Tertiary per contrasto rispetto al Primary */
-  --md-accent:#7D5260;
-  --md-accent-dark:#633B48;
+  /* CTA principale: stesso blu dei bottoni "Create"/primari nativi di Confluence */
+  --md-accent:#0C66E4;
+  --md-accent-dark:#0055CC;
 
-  --md-surface:#FFFBFE;
-  --md-surface-1:#F7F2FA;
-  --md-surface-2:#F1ECF4;
-  --md-bg:#F4F0F7;
+  --md-surface:#FFFFFF;
+  --md-surface-1:#F7F8F9;           /* sfondo pagina Confluence */
+  --md-surface-2:#F1F2F4;
+  --md-bg:#F7F8F9;
 
-  --md-outline:#79747E;
-  --md-outline-variant:#CAC4D0;
-  --md-text:#1C1B1F;
-  --md-text-mute:#49454F;
+  --md-outline:#8590A2;
+  --md-outline-variant:#DFE1E6;     /* bordo/divider standard Confluence */
+  --md-text:#1D2125;
+  --md-text-mute:#626F86;
 
-  --md-error:#B3261E;
-  --md-error-container:#F9DEDC;
-  --md-on-error-container:#410E0B;
-  /* "success" non è un ruolo nativo M3: estensione custom con lightness coerente ai container baseline */
-  --md-success:#2E6B44;
-  --md-success-container:#D7F5DA;
+  --md-error:#C9372C;
+  --md-error-container:#FFEBE6;
+  --md-on-error-container:#AE2E24;
+  --md-success:#1F845A;
+  --md-success-container:#DFFCF0;
 
-  /* M3 elevation: shadow leggerissime, il "peso" lo dà il tint di superficie */
+  /* Elevazione: shadow leggerissime, coerenti con le superfici piatte di Confluence */
   --md-elev-1: 0 1px 2px rgba(0,0,0,.05), 0 1px 3px 1px rgba(0,0,0,.04);
   --md-elev-2: 0 1px 2px rgba(0,0,0,.06), 0 2px 6px 2px rgba(0,0,0,.05);
   --md-elev-3: 0 4px 8px 3px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.08);
 
-  /* M3 shape scale */
+  /* Shape scale (mantenuta in stile M3 — non richiesto un cambio di forma, solo colore) */
   --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:28px;
   --radius: var(--r-lg);
 }
@@ -124,7 +123,7 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 }
 .chip-po{background:var(--md-success-container);color:var(--md-success);}
 .chip-analista{background:var(--md-secondary-container);color:var(--md-accent-dark);}
-.chip-shared{background:#E9E2F7;color:#5B3E9E;}
+.chip-shared{background:var(--md-secondary-container);color:var(--md-on-secondary-container);}
 
 /* ---------- Radio option cards (M3: outlined selezionabile, container tint quando selezionato) ---------- */
 .opt-group{display:flex;flex-direction:column;gap:10px;}
@@ -283,6 +282,19 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 }
 .tab-btn:hover{background:var(--md-surface-2);}
 .tab-btn.active{color:var(--md-primary-dark);border-bottom-color:var(--md-primary);}
+.group-toggle-row{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:12px 24px;border-bottom:1px solid var(--md-outline-variant);background:var(--md-surface-1);
+}
+.group-toggle-label{font-size:12px;font-weight:600;color:var(--md-text-mute);}
+.group-toggle{display:flex;gap:4px;background:var(--md-surface-2);border-radius:99px;padding:3px;}
+.group-btn{
+  background:none;border:none;cursor:pointer;font-size:12px;font-weight:600;
+  color:var(--md-text-mute);padding:7px 14px;border-radius:99px;
+}
+.group-btn:hover{color:var(--md-text);}
+.group-btn.active{background:var(--md-primary);color:var(--md-on-primary);}
+.group-toggle-row.disabled{opacity:.45;pointer-events:none;}
 .output-body{padding:22px 24px;max-height:70vh;overflow:auto;}
 .output-preview{
   border:1px solid var(--md-outline-variant);border-radius:var(--r-md);padding:18px 20px;background:var(--md-surface-1);font-size:13px;
@@ -345,8 +357,8 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 <body>
 
 <div class="appbar">
-  <h1>Raccolta requisiti Data Product</h1>
-  <p>Wizard guidato · genera il riepilogo pronto per Confluence</p>
+  <h1>Genera requisiti per i Data Product</h1>
+  <p>Wizard guidato · genera il riepilogo pronto per Template Analisi Funzionale in Confluence</p>
 </div>
 
 <div class="layout">
@@ -356,7 +368,7 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
   <!-- STEP 0: verifica preliminare -->
   <div class="card" id="cardPath">
     <p class="card-title"><span class="num">0</span> Verifica preliminare del fabbisogno dati</p>
-    <p class="card-sub">Prima di aprire il requisito, verifica su Witboost Marketplace se il dato è già a catalogo. In base all'esito, scegli il percorso corretto.</p>
+    <p class="card-sub">Prima di compilare il requisito, verifica su Witboost Marketplace se il dato è già a catalogo. In base all'esito, scegli il percorso corretto. <a href="https://witboost-ui.dataoneplatform.teamsystem.cloud/">Accedi a Witboost</a></p>
 
     <div class="opt-group" id="pathOptions">
       <label class="opt-card" data-val="nuovo_dp">
@@ -405,8 +417,14 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
       <button id="closeOverlay" aria-label="Chiudi"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
     </div>
     <div class="output-tabs">
-      <button class="tab-btn active" data-mode="summary" id="tabSummary">Riepilogo interno</button>
-      <button class="tab-btn" data-mode="af" id="tabAf">Sezione Analisi Funzionale (TS DocsPilot)</button>
+      <button class="tab-btn active" data-mode="af" id="tabAf">Sezione Analisi Funzionale (Confluence)</button>
+    </div>
+    <div class="group-toggle-row" id="groupToggleRow">
+      <span class="group-toggle-label">Struttura dei requisiti:</span>
+      <div class="group-toggle">
+        <button class="group-btn active" data-group="separate" id="groupSeparate">Un requisito per ciascun DP/Output Port</button>
+        <button class="group-btn" data-group="single" id="groupSingle">Un unico requisito, più Use Case (US001, US002...)</button>
+      </div>
     </div>
     <div class="output-body">
       <div class="output-preview" id="outputPreview"></div>
@@ -1245,13 +1263,15 @@ function buildAnalisiFunzionaleHtml(){
   const reqBase = getStartReqBase();
   const chapterBase = getStartChapterBase();
   let html = '';
-  let reqN = 1;
+  let reqN = 1; // avanza una volta per REQ (in modalità "single" resta fermo a 1)
+  let usN = 1;  // avanza una volta per Use Case (in "single" avanza per ogni DP/OP)
 
   function reqHeader(titolo){
     html += `<h3>${chapterCodeFor(chapterBase, reqN)} ${reqCodeFor(reqBase, reqN)} - ${esc(titolo)}</h3>`;
   }
   function usHeader(titolo){
-    html += `<h4>US${String(reqBase.start + (reqN-1)).padStart(reqBase.width,'0')} - ${esc(titolo)}</h4>`;
+    html += `<h4>US${String(reqBase.start + (usN-1)).padStart(reqBase.width,'0')} - ${esc(titolo)}</h4>`;
+    usN++;
   }
 
   if(currentPath === 'gold'){
@@ -1280,9 +1300,8 @@ function buildAnalisiFunzionaleHtml(){
     return html;
   }
 
-  // --- Requisito 1: Data Product (solo se nuovo DP) ---
-  if(currentPath === 'nuovo_dp'){
-    reqHeader(`Creazione nuovo Data Product ${dp.name}`);
+  // --- Use Case per il Data Product (sezione 1, solo se nuovo DP) ---
+  function renderDpUseCase(){
     usHeader(`Definizione Data Product ${dp.name}`);
     html += afField('Descrizione', dp.desc);
     html += afField('Attori coinvolti', `Owner: ${dp.owner} — Support contact: ${dp.support} — Permessi: ${dp.permessi}`);
@@ -1301,18 +1320,13 @@ function buildAnalisiFunzionaleHtml(){
     html += afField('Pre-condizioni', 'Assenza del dato a catalogo, verificata su Witboost Marketplace.');
     html += afField('Post-condizioni', `Data Product "${dp.name}" creato nel domain "${dp.domain}", pronto per l'aggiunta di Output Port.`);
     html += afField('Conformità e normative', '—');
-    html += `<h4>Area dati</h4><p><em>Non applicabile a livello di Data Product — lo schema dati è definito a livello di singola Output Port (vedi requisiti successivi).</em></p>`;
+    html += `<h4>Area dati</h4><p><em>Non applicabile a livello di Data Product — lo schema dati è definito a livello di singola Output Port (vedi Use Case successivi).</em></p>`;
     html += `<h4>Criteri di accettazione</h4><p>Il Data Product è visibile e ricercabile su Witboost Marketplace, con owner e permessi correttamente assegnati.</p>`;
-    reqN++;
   }
 
-  // --- Un Requisito/Use case per ogni Output Port ---
-  opBlocks.forEach((id)=>{
-    const o = collectOpData(id);
-    const titolo = `Creazione nuova Output Port ${o.name || '—'}`;
-    reqHeader(titolo);
+  // --- Use Case per una singola Output Port ---
+  function renderOpUseCase(o){
     usHeader(o.name || '—');
-
     html += afField('Descrizione', o.desc);
     html += afField('Attori coinvolti', currentPath==='nuova_op'
       ? `Data Product esistente: ${dp.existing} — PO / Analyst team ERP (tipologia tabella, schedulazione) — Analista (schema, mapping, SQL Change Tracking)`
@@ -1357,7 +1371,31 @@ function buildAnalisiFunzionaleHtml(){
     html += `</table>`;
 
     html += `<h4>Criteri di accettazione</h4><p>La vista SQL supera la checklist di validazione (${o.checkedCount}/${o.totalChecks} voci), l'Output Port "${o.name}" è pubblicata a catalogo Witboost con lo schema colonne descritto, e i parametri di catalogazione (DPShortDescription, DPModuleId_FW5L, DPBatchSize) sono correttamente valorizzati.</p>`;
+  }
 
+  const opsData = opBlocks.map(id => collectOpData(id));
+
+  if(groupMode === 'single'){
+    // --- Un unico Requisito, con un Use Case distinto (US001, US002, ...) per il DP e per ogni Output Port ---
+    const opNames = opsData.map(o=>o.name||'—').join(', ');
+    const titolo = currentPath === 'nuovo_dp'
+      ? `Creazione Data Product ${dp.name} e Output Port associate (${opNames})`
+      : `Creazione nuove Output Port su ${dp.existing} (${opNames})`;
+    reqHeader(titolo);
+    if(currentPath === 'nuovo_dp') renderDpUseCase();
+    opsData.forEach(o => renderOpUseCase(o));
+    return html;
+  }
+
+  // --- Modalità "separata": un Requisito distinto (con il proprio Use Case) per il DP (se nuovo) e per ogni Output Port ---
+  if(currentPath === 'nuovo_dp'){
+    reqHeader(`Creazione nuovo Data Product ${dp.name}`);
+    renderDpUseCase();
+    reqN++;
+  }
+  opsData.forEach((o)=>{
+    reqHeader(`Creazione nuova Output Port ${o.name || '—'}`);
+    renderOpUseCase(o);
     reqN++;
   });
 
@@ -1389,21 +1427,24 @@ function buildOutputText(sourceHtml){
   return out.trim();
 }
 
-let outputMode = 'summary';
+let outputMode = 'af';
+let groupMode = 'separate';
 function renderOutputPreview(){
   const preview = document.getElementById('outputPreview');
   const title = document.getElementById('outputTitle');
+  const groupRow = document.getElementById('groupToggleRow');
+  groupRow.classList.toggle('disabled', currentPath === 'gold');
   if(outputMode === 'af'){
     preview.innerHTML = buildAnalisiFunzionaleHtml();
-    title.textContent = 'Sezione Analisi Funzionale — pronta da incollare nel Template Master (TS DocsPilot)';
+    title.textContent = 'Sezione Analisi Funzionale — pronta da incollare nella sezione requisiti dell\'analisi funzionale (Confluence)';
   } else {
     preview.innerHTML = buildOutputHtml();
     title.textContent = 'Riepilogo requisiti — pronto per Confluence';
   }
 }
 document.getElementById('btnGenerate').addEventListener('click', ()=>{
-  outputMode = 'summary';
-  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.toggle('active', t.dataset.mode==='summary'));
+  outputMode = 'af';
+  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.toggle('active', t.dataset.mode==='af'));
   renderOutputPreview();
   document.getElementById('overlay').classList.add('open');
 });
@@ -1411,6 +1452,14 @@ document.querySelectorAll('.tab-btn').forEach(tab=>{
   tab.addEventListener('click', ()=>{
     outputMode = tab.dataset.mode;
     document.querySelectorAll('.tab-btn').forEach(t=>t.classList.toggle('active', t===tab));
+    renderOutputPreview();
+  });
+});
+document.querySelectorAll('.group-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(currentPath === 'gold') return; // per Gold Port non ha senso: è già un unico item
+    groupMode = btn.dataset.group;
+    document.querySelectorAll('.group-btn').forEach(b=>b.classList.toggle('active', b===btn));
     renderOutputPreview();
   });
 });
