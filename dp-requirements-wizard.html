@@ -534,12 +534,19 @@ function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').repla
 
 function updateProgress(){
   const track = document.getElementById('progressTrack');
-  const total = currentPath ? 3 : 1;
-  const done = currentPath ? (currentPath ? 2 : 1) : 0;
+  let done = 0;
+  if(currentPath) done = 1;                 // step 1: percorso scelto
+  if(dpValidated) done = 2;                 // step 2: dati generali / DP esistente / Gold Port... convalidati
+  if(dpValidated){
+    const step3Ready = currentPath === 'gold'
+      ? goldValidated
+      : (opBlocks.length > 0 && opBlocks.every(id => opValidated[id]));
+    if(step3Ready) done = 3;                // step 3: tutte le Output Port (o la Gold Port) convalidate
+  }
   track.innerHTML = '';
   for(let i=0;i<3;i++){
     const seg = document.createElement('div');
-    seg.className = 'progress-seg' + (i < (currentPath?2:1) ? ' done':'');
+    seg.className = 'progress-seg' + (i < done ? ' done':'');
     track.appendChild(seg);
   }
 }
@@ -554,7 +561,6 @@ document.querySelectorAll('#pathOptions .opt-card').forEach(card=>{
     card.querySelector('input').checked = true;
     currentPath = card.dataset.val;
     renderDynamic();
-    updateProgress();
   });
 });
 
@@ -694,6 +700,7 @@ function attachGoldValidation(cardEl){
 }
 
 function updateGenerateAvailability(){
+  updateProgress();
   const genBtn = document.getElementById('btnGenerate');
   let ready = dpValidated;
   if(ready){
