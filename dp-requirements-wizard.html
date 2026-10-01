@@ -2,7 +2,7 @@
 <!-- saved from url=(0075)https://tsenterprisecloud.github.io/DataProduct/dp-requirements-wizard.html -->
 <html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Wizard Generazione Requisiti in Analisi Funzionale Confluense per Data Product</title>
+<title>Functional Analysis Wizard for Data Products</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root{
@@ -75,6 +75,10 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 .appbar h1{
   margin:0;font-size:22px;font-weight:600;letter-spacing:0;color:var(--md-primary-dark);
 }
+.appbar-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.confluence-link{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--r-sm);flex:none;}
+.confluence-link:hover{background:var(--md-surface-2);}
+.confluence-link:focus-visible{outline:2px solid var(--md-primary);outline-offset:2px;}
 .appbar p{margin:4px 0 0;font-size:13px;color:var(--md-text-mute);font-weight:400;}
 
 /* ---------- Layout ---------- */
@@ -381,7 +385,12 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 <body>
 
 <div class="appbar">
-  <h1>Genera requisiti per i Data Product</h1>
+  <div class="appbar-heading">
+    <h1>Functional Analysis Wizard for Data Products</h1>
+    <a class="confluence-link" href="https://teamsystem.atlassian.net/wiki/" target="_blank" rel="noopener noreferrer" aria-label="Apri Confluence TeamSystem" title="Apri Confluence TeamSystem">
+      <img src="confluence.svg" alt="" width="24" height="24">
+    </a>
+  </div>
   <p>Wizard guidato · genera il riepilogo pronto per Template Analisi Funzionale in Confluence</p>
 </div>
 
