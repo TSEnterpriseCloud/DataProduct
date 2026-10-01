@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0075)https://tsenterprisecloud.github.io/DataProduct/dp-requirements-wizard.html -->
+<html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>Wizard Generazione Requisiti in Analisi Funzionale Confluense per Data Product</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -189,7 +189,9 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 }
 
 /* ---------- Columns table ---------- */
-.col-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:10px;}
+.col-table-wrap{overflow-x:auto;margin-bottom:10px;padding-bottom:4px;}
+.col-table{width:100%;min-width:1020px;border-collapse:collapse;font-size:12.5px;margin-bottom:0;}
+.col-table .th-note{font-weight:600;font-size:10px;color:var(--md-primary-dark);white-space:nowrap;}
 .col-table th{
   text-align:left;background:var(--md-primary-container);color:var(--md-on-primary-container);
   padding:8px 8px;font-weight:600;font-size:11.5px;border-bottom:1px solid var(--md-outline-variant);
@@ -346,6 +348,27 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 .card.is-complete{border-color:var(--md-success);background:var(--md-surface);}
 
 .hidden{display:none !important;}
+
+/* ---------- Dimensionamento topic Hermes ---------- */
+.sizing-out{
+  border:1px solid var(--md-outline-variant);border-radius:var(--r-md);
+  background:var(--md-surface-1);padding:14px 16px;margin-bottom:12px;
+}
+.sizing-empty{font-size:12.5px;color:var(--md-text-mute);}
+.sizing-out[data-empty="0"] .sizing-empty{display:none;}
+.sizing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:640px){.sizing-grid{grid-template-columns:1fr 1fr;}}
+.sz{display:flex;flex-direction:column;gap:2px;}
+.sz-lab{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--md-text-mute);font-weight:600;}
+.sz-val{font-size:14.5px;font-weight:600;color:var(--md-text);}
+.sz-hi .sz-val{color:var(--md-primary-dark);}
+.sz-hi{background:var(--md-primary-container);border-radius:var(--r-xs);padding:8px 10px;margin:-8px -10px;}
+.sizing-help{font-size:12.5px;margin-bottom:4px;}
+.sizing-help summary{cursor:pointer;color:var(--md-primary-dark);font-weight:600;padding:6px 0;}
+.sizing-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;}
+.sizing-table th{background:var(--md-secondary-container);color:var(--md-on-secondary-container);text-align:left;padding:6px 8px;font-size:11px;font-weight:700;}
+.sizing-table td{padding:6px 8px;border-bottom:1px solid var(--md-outline-variant);}
+
 .note-box{
   background:var(--md-primary-container);border-left:4px solid var(--md-primary);
   padding:10px 14px;border-radius:var(--r-sm);font-size:12.5px;color:var(--md-on-primary-container);margin-bottom:16px;
@@ -363,7 +386,7 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 
 <div class="layout">
 
-  <div class="progress-track" id="progressTrack"></div>
+  <div class="progress-track" id="progressTrack"><div class="progress-seg"></div><div class="progress-seg"></div><div class="progress-seg"></div></div>
 
   <!-- STEP 0: verifica preliminare -->
   <div class="card" id="cardPath">
@@ -402,10 +425,10 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
 
 <div class="bottombar hidden" id="bottomBar">
   <button class="btn btn-ghost" id="btnAddOp">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> Aggiungi un'altra Output Port
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg> Aggiungi un'altra Output Port
   </button>
-  <button class="btn btn-primary" id="btnGenerate" disabled title="Convalida tutte le sezioni obbligatorie per generare il riepilogo">
-    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> Genera riepilogo per Confluence
+  <button class="btn btn-primary" id="btnGenerate" disabled="" title="Convalida tutte le sezioni obbligatorie per generare il riepilogo">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg> Genera riepilogo per Confluence
   </button>
 </div>
 
@@ -414,7 +437,7 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
   <div class="output-panel">
     <div class="output-head">
       <h2 id="outputTitle">Riepilogo requisiti — pronto per Confluence</h2>
-      <button id="closeOverlay" aria-label="Chiudi"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+      <button id="closeOverlay" aria-label="Chiudi"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
     </div>
     <div class="output-tabs">
       <button class="tab-btn active" data-mode="af" id="tabAf">Sezione Analisi Funzionale (Confluence)</button>
@@ -432,10 +455,10 @@ code, .mono{font-family:'Consolas','Courier New',monospace;}
     <div class="output-foot">
       <span class="copy-status" id="copyStatus">Copiato negli appunti ✓</span>
       <button class="btn btn-ghost" id="btnCopyHtml">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg> Copia (formattato)
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg> Copia (formattato)
       </button>
       <button class="btn btn-primary" id="btnCopyText">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/></svg> Copia (testo semplice)
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"></path></svg> Copia (testo semplice)
       </button>
     </div>
   </div>
@@ -463,7 +486,8 @@ const EX = { // valori di esempio (placeholder editabili)
   opName: "customerrisk",
   opDesc: "The customer risk dataproduct provides analysis with metrics on exposure, accounting flows, due dates, unpaid items, payment indicators and insurance coverage. Supports accurate assessments through structured and up-to-date data.",
   schedulazione: "Ogni 2 ore",
-  volume: "≈ 15 MB / 12.000 record al giorno",
+  records: "22005000",
+  recordSize: "2.32",
   version: "1.0.0",
   tipoRilascio: "v12",
   identifier: "workspaceId + companyRegistryId + customerId",
@@ -478,9 +502,9 @@ const EX = { // valori di esempio (placeholder editabili)
 };
 
 const COL_DEFAULT = [
-  {name:"workspaceId", desc:"Identificativo del workspace TeamSystem", type:"string", constraint:"required, isIdentifier", nullable:"No", ord:"1", fqn:"CG44.WORKSPACE_ID"},
-  {name:"companyRegistryId", desc:"Identificativo anagrafico azienda", type:"string", constraint:"required, isIdentifier", nullable:"No", ord:"2", fqn:"CG44.COMPANY_REGISTRY_ID"},
-  {name:"customerRiskScore", desc:"Punteggio di rischio calcolato sul cliente", type:"number", constraint:"required", nullable:"Sì", ord:"3", fqn:"CG16.CG16_SCORE"}
+  {name:"workspaceId", desc:"Identificativo del workspace TeamSystem", descEn:"TeamSystem workspace identifier", type:"string", isIdentifier:"Sì", nullable:"No", ord:"1", fqn:"CG44.WORKSPACE_ID"},
+  {name:"companyRegistryId", desc:"Identificativo anagrafico azienda", descEn:"Company registry identifier", type:"string", isIdentifier:"Sì", nullable:"No", ord:"2", fqn:"CG44.COMPANY_REGISTRY_ID"},
+  {name:"customerRiskScore", desc:"Punteggio di rischio calcolato sul cliente", descEn:"Risk score calculated on the customer", type:"number", isIdentifier:"No", nullable:"Sì", ord:"3", fqn:"CG16.CG16_SCORE"}
 ];
 
 const CHECKLIST_DEF = [
@@ -531,6 +555,74 @@ function icon(name, size=14){
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;flex:none;" aria-hidden="true"><path d="${ICON_PATHS[name]}"/></svg>`;
 }
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ============================================================
+   DIMENSIONAMENTO TOPIC HERMES
+   Formula e costanti: TeamSystem Development Portal — Module/hermes/topic-sizing
+   Partizioni = (AverageRecordSize x RetentionRecordMaxCount / SecondsInADay) / KafkaPartitionSpeed
+   ============================================================ */
+const HERMES = {
+  KAFKA_PARTITION_SPEED: 10,   // MB/s di throughput per partizione
+  SECONDS_IN_A_DAY: 86400,
+  KB_PER_MB: 1024,             // convenzione binaria; per quella decimale impostare 1000
+  BASELINE_PROD: 4,            // baseline prudenziale di produzione
+  FLOOR_PROD: 2,               // parallelismo minimo
+  INFINITE_RETENTION_MARGIN: 0.5
+};
+function evenCeil(x){ return Math.max(0, 2 * Math.ceil(x / 2)); }
+function fmtNum(n, dec=2){
+  return n.toLocaleString('it-IT', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+}
+/** records: numero di record a retention piena; recordKb: peso medio del singolo record in Kb */
+function computeHermesSizing(records, recordKb){
+  if(!(records > 0) || !(recordKb > 0)) return null;
+  const totalKb = records * recordKb;
+  const totalMb = totalKb / HERMES.KB_PER_MB;
+  const totalGb = totalMb / HERMES.KB_PER_MB;
+  const throughput = totalMb / HERMES.SECONDS_IN_A_DAY;              // MB/s a smaltimento in 24 h
+  const formula = throughput / HERMES.KAFKA_PARTITION_SPEED;
+  const prodMin = Math.max(HERMES.FLOOR_PROD, evenCeil(formula));
+  const prodPrud = Math.max(HERMES.BASELINE_PROD, evenCeil(prodMin * (1 + HERMES.INFINITE_RETENTION_MARGIN)));
+  const test = Math.max(HERMES.FLOOR_PROD, Math.ceil(prodPrud / 2));
+  return {records, recordKb, totalKb, totalMb, totalGb, throughput, formula, prodMin, prodPrud, test};
+}
+function fmtWeight(s){
+  return s.totalGb >= 1024 ? `${fmtNum(s.totalGb/1024)} TB`
+       : s.totalGb >= 1    ? `${fmtNum(s.totalGb)} GB`
+       :                     `${fmtNum(s.totalMb)} MB`;
+}
+/** Stringa sintetica usata nel riepilogo per Confluence */
+function sizingSummary(s){
+  if(!s) return 'Non dimensionato — record a retention piena e peso medio del record non indicati';
+  return `${s.records.toLocaleString('it-IT')} record a retention piena × ${fmtNum(s.recordKb)} Kb = ${fmtWeight(s)} `
+       + `(throughput ${fmtNum(s.throughput)} MB/s, partizioni da formula ${fmtNum(s.formula)})`;
+}
+function partitionsSummary(s){
+  if(!s) return 'Da determinare';
+  return `TEST ${s.test} → PROD ${s.prodMin} (minimo) / ${s.prodPrud} (prudenziale)`;
+}
+/** Aggiorna il riquadro di dimensionamento di un blocco Output Port */
+function refreshSizing(block){
+  const out = block.querySelector('.sizing-out');
+  if(!out) return;
+  const grid = out.querySelector('.sizing-grid');
+  const records = parseFloat((block.querySelector('.op-records').value || '').replace(',', '.'));
+  const recordKb = parseFloat((block.querySelector('.op-recsize').value || '').replace(',', '.'));
+  const s = computeHermesSizing(records, recordKb);
+  if(!s){
+    out.dataset.empty = '1';
+    grid.classList.add('hidden');
+    return;
+  }
+  out.dataset.empty = '0';
+  grid.classList.remove('hidden');
+  out.querySelector('.sz-weight').textContent  = fmtWeight(s);
+  out.querySelector('.sz-thr').textContent     = `${fmtNum(s.throughput)} MB/s`;
+  out.querySelector('.sz-formula').textContent = fmtNum(s.formula);
+  out.querySelector('.sz-test').textContent    = s.test;
+  out.querySelector('.sz-prodmin').textContent = s.prodMin;
+  out.querySelector('.sz-prodprud').textContent= s.prodPrud;
+}
 
 function updateProgress(){
   const track = document.getElementById('progressTrack');
@@ -798,6 +890,7 @@ function buildDpGeneraliCard(full, isGold=false){
     <div class="field">
       <label>Data Product Description <span class="req">*</span> <span class="chip chip-shared" style="margin-left:6px;">PO + Analista se necessario</span></label>
       <textarea id="f_dpdesc" class="req-field" placeholder="Es. ${EX.dpDesc}"></textarea>
+      <div class="hint"><strong>In inglese</strong> — testo pubblicato a catalogo su Witboost</div>
     </div>
 
     <div class="row2">
@@ -864,7 +957,7 @@ function addOpBlock(){
     <div class="field">
       <label>Output Port Description <span class="req">*</span></label>
       <textarea class="op-desc req-field" placeholder="Es. ${EX.opDesc}"></textarea>
-      <div class="hint">La descrizione deve superare i 50 caratteri</div>
+      <div class="hint"><strong>In inglese</strong> — testo pubblicato a catalogo su Witboost. La descrizione deve superare i 50 caratteri</div>
     </div>
     <div class="row3">
       <div class="field">
@@ -876,42 +969,87 @@ function addOpBlock(){
       </div>
       <div class="field">
         <label>Schedulazione per ingestion</label>
-        <select class="op-sched">
-          <option value="Low — Ogni giorno">Low — Ogni giorno</option>
-          <option value="Medium — 2 volte al giorno" selected>Medium — 2 volte al giorno</option>
+        <select class="op-sched" disabled>
+          <option value="Low — Ogni giorno" selected>Low — Ogni giorno</option>
+          <option value="Medium — 2 volte al giorno">Medium — 2 volte al giorno</option>
           <option value="High — Ogni ora">High — Ogni ora</option>
-          <option value="Highest — Sotto le 2 ore">Highest — Sotto le 2 ore</option>
+          <option value="Highest — Più volte nell'ora (sotto l'ora)">Highest — Più volte nell'ora (sotto l'ora)</option>
         </select>
-        <div class="hint">Frequenza da definire in base alle esigenze funzionali e operative</div>
+        <div class="hint">Frequenza minima in Cloud, On Prem è a carico utente</div>
       </div>
       <div class="field">
-        <label>Volume dati atteso</label>
-        <select class="op-volume">
-          <option value="Minimo (~2 MB / ~500 record)">Minimo — ~2 MB / ~500 record</option>
-          <option value="Medium (~10 MB / ~10.000 record)" selected>Medium — ~10 MB / ~10.000 record</option>
-          <option value="High (~50 MB / ~100.000 record)">High — ~50 MB / ~100.000 record</option>
-          <option value="Highest (~200 MB / ~500.000 record)">Highest — ~200 MB / ~500.000 record</option>
-        </select>
-        <div class="hint">Fascia stimata, utile al dimensionamento del flusso verso Hermes</div>
+        <label>Tipo Rilascio</label>
+        <input type="text" class="op-rilascio" placeholder="Es. ${EX.tipoRilascio}">
+        <div class="hint">Utile per la distribuzione dello script di insert in catalogazione</div>
       </div>
     </div>
-    <div class="field">
-      <label>Tipo Rilascio</label>
-      <input type="text" class="op-rilascio" placeholder="Es. ${EX.tipoRilascio}">
-      <div class="hint">Utile per la distribuzione dello script di insert in catalogazione</div>
+
+    <!-- 2.0 dimensionamento topic Hermes -->
+    <div class="subsection">
+      <div class="subhead">Volume dati atteso e dimensionamento topic Hermes <span class="chip chip-po">PO</span></div>
+      <div class="note-box">
+        Servono due soli numeri, <strong>misurati su un campione di estrazione</strong>, non stimati a occhio. Da questi il wizard ricava peso del topic e numero di partizioni con la formula del TeamSystem Development Portal (<span class="mono">Module/hermes/topic-sizing</span>):
+        <span class="mono">Partizioni = (PesoRecord × RecordRetention / 86.400 s) / 10 MB/s</span>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Record attesi a retention piena <span class="mono" style="color:#8A9A9D;font-weight:400;">(RetentionRecordMaxCount)</span></label>
+          <input type="number" class="op-records" min="0" step="1000" placeholder="Es. ${EX.records}">
+          <div class="hint">Numero totale di record presenti nel topic a retention piena, non i record al giorno</div>
+        </div>
+        <div class="field">
+          <label>Peso medio del singolo record <span class="mono" style="color:#8A9A9D;font-weight:400;">(AverageRecordSize, Kb)</span></label>
+          <input type="number" class="op-recsize" min="0" step="0.01" placeholder="Es. ${EX.recordSize}">
+          <div class="hint">Misurato su campione: peso del payload JSON diviso il numero di record del campione, oppure numero di caratteri / 1024 per ottenere Kb</div>
+        </div>
+      </div>
+      <div class="sizing-out" data-empty="1">
+        <div class="sizing-empty">Inserisci i due valori per calcolare il dimensionamento.</div>
+        <div class="sizing-grid hidden">
+          <div class="sz"><span class="sz-lab">Peso totale</span><span class="sz-val sz-weight">—</span></div>
+          <div class="sz"><span class="sz-lab">Throughput</span><span class="sz-val sz-thr">—</span></div>
+          <div class="sz"><span class="sz-lab">Partizioni da formula</span><span class="sz-val sz-formula">—</span></div>
+          <div class="sz sz-hi"><span class="sz-lab">Partizioni TEST</span><span class="sz-val sz-test">—</span></div>
+          <div class="sz sz-hi"><span class="sz-lab">Partizioni PROD (minimo)</span><span class="sz-val sz-prodmin">—</span></div>
+          <div class="sz sz-hi"><span class="sz-lab">Partizioni PROD (prudenziale)</span><span class="sz-val sz-prodprud">—</span></div>
+        </div>
+      </div>
+      <details class="sizing-help">
+        <summary>Specchietto di sintesi: peso totale → partizioni TEST → partizioni PROD</summary>
+        <table class="sizing-table">
+          <thead><tr><th>Peso totale a retention piena</th><th>Partizioni<br>da formula</th><th>TEST</th><th>PROD<br>minimo</th><th>PROD<br>prudenziale</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">≤ 1.728.000 MB</span> — fino a ≈ 1,65 TB</td><td>≤ 2</td><td>2</td><td>2</td><td>4</td></tr>
+            <tr><td><span class="mono">1.728.001 – 3.456.000 MB</span> — ≈ 1,65 – 3,30 TB</td><td>2 – 4</td><td>3</td><td>4</td><td>6</td></tr>
+            <tr><td><span class="mono">3.456.001 – 5.184.000 MB</span> — ≈ 3,30 – 4,94 TB</td><td>4 – 6</td><td>5</td><td>6</td><td>10</td></tr>
+            <tr><td><span class="mono">&gt; 5.184.000 MB</span> — oltre ≈ 4,94 TB</td><td>&gt; 6</td><td colspan="3">usare il valore calcolato sopra</td></tr>
+          </tbody>
+        </table>
+        <div class="hint" style="margin-top:8px;">
+          Regole applicate: <strong>PROD minimo</strong> = formula arrotondata al pari superiore, con pavimento di 2 partizioni (parallelismo minimo). <strong>PROD prudenziale</strong> = baseline di 4 partizioni, con margine del 50% dove il minimo la supera; è la colonna da usare per i topic a retention indefinita usati in <span class="mono">globalKTable</span>. <strong>TEST</strong> = metà del prudenziale, mai sotto 2. Le partizioni Kafka si possono solo aumentare, mai ridurre: nel dubbio conviene il prudenziale.
+        </div>
+        <div class="hint">Riferimento: dei dieci Data Product TS Enterprise già dimensionati, nove stanno nella prima fascia (il più grande, le righe documenti di vendita, è a 308 GB); solo i movimenti contabili la superano, con ≈ 3,18 TB → TEST 3 / PROD 4 minimo, 6 prudenziale.</div>
+      </details>
     </div>
 
     <!-- 2.1 -->
     <div class="subsection">
       <div class="subhead">2.1 Schema colonne Output Port <span class="chip chip-analista">Analista</span></div>
-      <table class="col-table">
-        <thead><tr>
-          <th style="width:16%">Nome campo</th><th style="width:22%">Descrizione</th><th style="width:10%">Data type</th>
-          <th style="width:14%">Constraint</th><th style="width:8%">Nullable</th><th style="width:6%">Ordinal</th>
-          <th style="width:18%">Fully Qualified Name</th><th></th>
-        </tr></thead>
-        <tbody class="col-tbody"></tbody>
-      </table>
+      <div class="note-box">
+        Doppia descrizione per ogni campo: la colonna <strong>Descrizione (IT)</strong> alimenta l'analisi funzionale su Confluence, la colonna <strong>Description (EN)</strong> è quella che viene <strong>effettivamente pubblicata a catalogo su Witboost</strong> e va quindi compilata in inglese.
+      </div>
+      <div class="col-table-wrap">
+        <table class="col-table">
+          <thead><tr>
+            <th style="width:13%">Nome campo</th><th style="width:19%">Descrizione (IT)</th>
+            <th style="width:19%">Description (EN) <span class="th-note">→ Witboost</span></th>
+            <th style="width:9%">Data type</th>
+            <th style="width:11%">IsIdentifier (key)</th><th style="width:8%">Nullable</th><th style="width:6%">Ordinal</th>
+            <th style="width:15%">Fully Qualified Name</th><th></th>
+          </tr></thead>
+          <tbody class="col-tbody"></tbody>
+        </table>
+      </div>
       <button class="add-row-btn" onclick="addColumnRow('${id}')">${icon('add',14)} Aggiungi campo</button>
     </div>
 
@@ -938,7 +1076,7 @@ function addOpBlock(){
     <div class="subsection">
       <div class="subhead">3. Parametri script insert per catalogazione <span class="chip chip-shared">PO + Analista</span></div>
       <div class="field">
-        <label>Descrizione breve in italiano <span class="mono" style="color:#8A9A9D;font-weight:400;">(DPShortDescription)</span></label>
+        <label>Data Product Description</label>
         <input type="text" class="op-shortdesc" placeholder="Es. ${EX.dpShortDesc}">
         <div class="hint">Mostrata nella console di ingestion</div>
       </div>
@@ -967,6 +1105,9 @@ function addOpBlock(){
   `;
   container.appendChild(block);
 
+  const dpNameField = document.querySelector(currentPath === 'nuova_op' ? '#f_existing_dp' : '#f_dpname');
+  if(dpNameField) block.querySelector('.op-shortdesc').value = dpNameField.value.trim();
+
   // popola colonne di esempio
   COL_DEFAULT.forEach(c => addColumnRow(id, c));
 
@@ -985,6 +1126,12 @@ function addOpBlock(){
     });
     clWrap.appendChild(g);
   });
+
+  // dimensionamento topic Hermes: ricalcolo a ogni digitazione
+  block.querySelectorAll('.op-records, .op-recsize').forEach(inp=>{
+    inp.addEventListener('input', ()=> refreshSizing(block));
+  });
+  refreshSizing(block);
 
   attachOpValidation(id);
   return id;
@@ -1009,7 +1156,8 @@ function addColumnRow(blockId, prefill){
   const p = prefill || {};
   tr.innerHTML = `
     <td><input type="text" class="c-name" value="${esc(p.name||'')}" placeholder="es. customerId"></td>
-    <td><input type="text" class="c-desc" value="${esc(p.desc||'')}" placeholder="descrizione"></td>
+    <td><input type="text" class="c-desc" value="${esc(p.desc||'')}" placeholder="descrizione in italiano"></td>
+    <td><input type="text" class="c-desc-en" value="${esc(p.descEn||'')}" placeholder="description in English"></td>
     <td>
       <select class="c-type">
         <option ${p.type==='string'?'selected':''}>string</option>
@@ -1018,7 +1166,9 @@ function addColumnRow(blockId, prefill){
         <option ${p.type==='boolean'?'selected':''}>boolean</option>
       </select>
     </td>
-    <td><input type="text" class="c-constraint" value="${esc(p.constraint||'')}" placeholder="required / isIdentifier"></td>
+    <td>
+      <select class="c-identifier"><option ${p.isIdentifier==='No'?'selected':''}>No</option><option ${p.isIdentifier==='Sì'?'selected':''}>Sì</option></select>
+    </td>
     <td>
       <select class="c-nullable"><option ${p.nullable==='Sì'?'selected':''}>Sì</option><option ${p.nullable==='No'?'selected':''}>No</option></select>
     </td>
@@ -1084,6 +1234,13 @@ document.getElementById('btnAddOp').addEventListener('click', ()=>{
   document.getElementById('btnAddOp').disabled = true;
 });
 
+document.addEventListener('input', event=>{
+  if(!event.target.matches('#f_dpname, #f_existing_dp')) return;
+  document.querySelectorAll('.op-shortdesc').forEach(input=>{
+    input.value = event.target.value.trim();
+  });
+});
+
 /* ============================================================
    GENERATE OUTPUT
    ============================================================ */
@@ -1093,8 +1250,8 @@ function orPlaceholder(v, ph){ return v && v.length ? v : `<em>${esc(ph)}</em>`;
 function collectOpData(id){
   const b = document.getElementById(id);
   const rows = [...b.querySelectorAll('.col-tbody tr')].map(tr=>({
-    name: val('.c-name', tr), desc: val('.c-desc', tr), type: val('.c-type', tr),
-    constraint: val('.c-constraint', tr), nullable: val('.c-nullable', tr),
+    name: val('.c-name', tr), desc: val('.c-desc', tr), descEn: val('.c-desc-en', tr), type: val('.c-type', tr),
+    isIdentifier: val('.c-identifier', tr), nullable: val('.c-nullable', tr),
     ord: val('.c-ord', tr), fqn: val('.c-fqn', tr)
   }));
   const checklist = [...b.querySelectorAll('.op-checklist input[type=checkbox]')];
@@ -1110,7 +1267,11 @@ function collectOpData(id){
   return {
     name: val('.op-name', b), desc: val('.op-desc', b), version: val('.op-version', b),
     tipo: tipoRadio ? tipoRadio.value : '',
-    sched: val('.op-sched', b), volume: val('.op-volume', b), rilascio: val('.op-rilascio', b),
+    sched: val('.op-sched', b), rilascio: val('.op-rilascio', b),
+    sizing: computeHermesSizing(
+      parseFloat((val('.op-records', b) || '').replace(',', '.')),
+      parseFloat((val('.op-recsize', b) || '').replace(',', '.'))
+    ),
     identifier: val('.op-identifier', b), trackingKeys: val('.op-trackingkeys', b),
     shortdesc: val('.op-shortdesc', b), moduleid: val('.op-moduleid', b), batchsize: val('.op-batchsize', b),
     columns: rows, checkedCount, totalChecks: checklist.length, checkedByGroup
@@ -1225,14 +1386,15 @@ function buildOutputHtml(){
     html += `<tr><td>Output Port Description</td><td>${esc(o.desc)}</td></tr>`;
     html += `<tr><td>Tipologia di tabella</td><td>${esc(o.tipo)}</td></tr>`;
     html += `<tr><td>Schedulazione per ingestion</td><td>${esc(o.sched)}</td></tr>`;
-    html += `<tr><td>Volume Dati atteso</td><td>${esc(o.volume)}</td></tr>`;
+    html += `<tr><td>Volume Dati atteso</td><td>${esc(sizingSummary(o.sizing))}</td></tr>`;
+    html += `<tr><td>Partizioni topic Hermes</td><td>${esc(partitionsSummary(o.sizing))}</td></tr>`;
     html += `<tr><td>Version</td><td>${esc(o.version)}</td></tr>`;
     html += `<tr><td>Tipo Rilascio</td><td>${esc(o.rilascio)}</td></tr>`;
     html += `</table>`;
 
-    html += `<h4>2.1 Schema colonne Output Port</h4><table><tr><th>Nome campo</th><th>Descrizione</th><th>Data type</th><th>Constraint</th><th>Nullable</th><th>Ordinal</th><th>Fully Qualified Name</th></tr>`;
+    html += `<h4>2.1 Schema colonne Output Port</h4><table><tr><th>Nome campo</th><th>Descrizione (IT)</th><th>Description (EN) — Witboost</th><th>Data type</th><th>IsIdentifier (key)</th><th>Nullable</th><th>Ordinal</th><th>Fully Qualified Name</th></tr>`;
     o.columns.forEach(c=>{
-      html += `<tr><td>${esc(c.name)}</td><td>${esc(c.desc)}</td><td>${esc(c.type)}</td><td>${esc(c.constraint)}</td><td>${esc(c.nullable)}</td><td>${esc(c.ord)}</td><td>${esc(c.fqn)}</td></tr>`;
+      html += `<tr><td>${esc(c.name)}</td><td>${esc(c.desc)}</td><td>${esc(c.descEn)}</td><td>${esc(c.type)}</td><td>${esc(c.isIdentifier)}</td><td>${esc(c.nullable)}</td><td>${esc(c.ord)}</td><td>${esc(c.fqn)}</td></tr>`;
     });
     html += `</table>`;
 
@@ -1244,7 +1406,7 @@ function buildOutputHtml(){
     html += `<h4>2.3 Checklist di validazione</h4><p>Voci verificate: <strong>${o.checkedCount}/${o.totalChecks}</strong></p>`;
 
     html += `<h4>3. Parametri script insert per catalogazione</h4><table>`;
-    html += `<tr><td>Descrizione breve in italiano (DPShortDescription)</td><td>${esc(o.shortdesc)}</td></tr>`;
+    html += `<tr><td>Data Product Description</td><td>${esc(o.shortdesc)}</td></tr>`;
     html += `<tr><td>ID modulo applicativo FW5L (DPModuleId_FW5L)</td><td>${esc(o.moduleid)}</td></tr>`;
     html += `<tr><td>Dimensione batch di ingestion (DPBatchSize)</td><td>${esc(o.batchsize)}</td></tr>`;
     html += `</table>`;
@@ -1338,17 +1500,19 @@ function buildAnalisiFunzionaleHtml(){
     html += afField('Attori coinvolti', currentPath==='nuova_op'
       ? `Data Product esistente: ${dp.existing} — PO / Analyst team ERP (tipologia tabella, schedulazione) — Analista (schema, mapping, SQL Change Tracking)`
       : `Data Product: ${dp.name} — Owner: ${dp.owner} — Analista (schema, mapping, SQL Change Tracking)`);
-    html += afField('Flussi (principali e alternativi)', `Tipologia tabella: ${o.tipo}. Schedulazione ingestion: ${o.sched}. Volume dati atteso: ${o.volume}. Versione: ${o.version}${o.rilascio?` (rilascio ${o.rilascio})`:''}.`);
+    html += afField('Flussi (principali e alternativi)', `Tipologia tabella: ${o.tipo}. Schedulazione ingestion: ${o.sched}. Volume dati atteso: ${sizingSummary(o.sizing)}. Partizioni topic Hermes: ${partitionsSummary(o.sizing)}. Versione: ${o.version}${o.rilascio?` (rilascio ${o.rilascio})`:''}.`);
     html += afField('Mockup/Prototipi', 'Non applicabile — Output Port dati, nessuna interfaccia utente. Vedi schema colonne in "Area dati".');
 
-    html += `<p><strong>Campi:</strong></p><table><tr><th>Label</th><th>Descrizione</th><th>Tipo</th><th>Valori</th><th>Obbligatorio</th></tr>`;
+    html += `<p><strong>Campi:</strong></p><table><tr><th>Label</th><th>Descrizione</th><th>Description (EN) — valore a catalogo Witboost</th><th>Tipo</th><th>Valori</th><th>Obbligatorio</th></tr>`;
     if(o.columns.length){
       o.columns.forEach(c=>{
-        const obbligatorio = /required/i.test(c.constraint) ? 'Sì' : 'No';
-        html += `<tr><td>${esc(c.name)}</td><td>${esc(c.desc)}</td><td>${esc(c.type)}</td><td>${esc(c.fqn)}</td><td>${obbligatorio}</td></tr>`;
+        const obbligatorio = c.nullable === 'No' ? 'Sì' : 'No';
+        const label = c.isIdentifier === 'Sì' ? `${esc(c.name)} <em>(key)</em>` : esc(c.name);
+        const en = c.descEn ? esc(c.descEn) : '<em>da tradurre</em>';
+        html += `<tr><td>${label}</td><td>${esc(c.desc)}</td><td>${en}</td><td>${esc(c.type)}</td><td>${esc(c.fqn)}</td><td>${obbligatorio}</td></tr>`;
       });
     } else {
-      html += `<tr><td colspan="5"><em>Nessun campo definito</em></td></tr>`;
+      html += `<tr><td colspan="6"><em>Nessun campo definito</em></td></tr>`;
     }
     html += `</table>`;
 
@@ -1361,8 +1525,9 @@ function buildAnalisiFunzionaleHtml(){
 
     html += afField('Regole decisionali', `Tipologia di tabella: ${o.tipo} (Last Event vs storico, in base alla natura del dato).`);
     html += afField('Regole di calcolo o elaborazione', (o.checkedByGroup && o.checkedByGroup['6. SQL Change Tracking']) ? afRuleList(o.checkedByGroup['6. SQL Change Tracking']).replace(/<\/?ul>|<\/?li>/g,'') : 'Nessun campo calcolato/derivato dichiarato.');
-    html += afField('Regole sui processi', `Schedulazione ingestion: ${o.sched}. Volume atteso: ${o.volume}. DPBatchSize: ${o.batchsize}.`);
-    html += afField('Pre-condizioni', `Identifier: ${o.identifier || '—'}. Tutte le tabelle coinvolte nella vista devono appartenere al medesimo database (requisito obbligatorio per il Change Tracking SQL).`);
+    html += afField('Regole sui processi', `Schedulazione ingestion: ${o.sched}. Volume atteso: ${sizingSummary(o.sizing)}. Partizioni topic Hermes da configurare: ${partitionsSummary(o.sizing)}. DPBatchSize: ${o.batchsize}.`);
+    const keyFields = o.columns.filter(c=>c.isIdentifier === 'Sì').map(c=>c.name).filter(Boolean);
+    html += afField('Pre-condizioni', `Identifier: ${o.identifier || (keyFields.length ? keyFields.join(' + ') : '—')}${keyFields.length ? ` (campi isIdentifier: ${keyFields.join(', ')})` : ''}. Tutte le tabelle coinvolte nella vista devono appartenere al medesimo database (requisito obbligatorio per il Change Tracking SQL).`);
     html += afField('Post-condizioni', `Output Port "${o.name}" pubblicata a catalogo Witboost, versione ${o.version}.`);
     html += afField('Conformità e normative', 'Tracciabilità garantita dai campi WORKSPACE_ID, COMPANY_REGISTRY_ID e SYSTEM_EXTRACTION_DATE, valorizzati dal programma di ingestion.');
 
@@ -1508,5 +1673,6 @@ function showCopyStatus(){
 
 updateProgress();
 </script>
-</body>
-</html>
+
+
+</body></html>
